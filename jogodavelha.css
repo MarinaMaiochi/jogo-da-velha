@@ -82,35 +82,25 @@ body>div{
     height: 50px;
     border: palevioletred solid 2px;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
 }
 .some{
     visibility: hidden;
 }
 .X{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: goldenrod;
-    font-size: 54px;
+    color: rgb(0, 0, 0);
+    font-size: 4px;
     cursor: default ;
-    padding: 0;
-    margin: 0;
+    background-image: url(x.png);
+    background-size: 100% 100%;
 }
 .O{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: palevioletred;
-    font-size: 54px;
+    color: rgb(0, 0, 0);
+    font-size: 4px;
     cursor: default ;
-    padding: 0;
-    margin: 0;
-
+    background-image: url(o.png);
+    background-size: 100% 100%;
 }
 
-} 
 span{
     margin: 0 0 0 6px;
 }

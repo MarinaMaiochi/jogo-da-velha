@@ -90,11 +90,11 @@ function jogadaJogador(event){
         espacoClicado.innerText = 'X' ;
         espacoClicado.classList.add('X');
         espacoClicado.classList.remove('vazio');
+
+        jogJogou++ ;
+        console.info( jogJogou);
+        checaProximoPasso();
     }
-    
-    jogJogou++ ;
-    console.info( jogJogou);
-    checaProximoPasso();
 }
 function jogadaComputador(){
     if(dificuldade == 'FACIL'){
