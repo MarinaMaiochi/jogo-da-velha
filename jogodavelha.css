@@ -12,9 +12,38 @@ h1{
 }
 body>div{
     display: flex;
-    align-items: center;
-    border: goldenrod solid 1px;  
+    align-items: center; 
 }
+
+.dificuldade{
+    align-items: center;
+}
+.dificuldade>*{
+    margin: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.botaoD{
+    width: 56px;
+    height: 30px;
+    border-radius: 2px; 
+    cursor: pointer;
+    margin: 0 2px 4px  2px;
+}
+
+.butFacil{
+    background-color: goldenrod;
+}
+.butMedio{
+    background-color:rgb(228, 120, 69);
+}
+.butDificil{
+    background-color:palevioletred;
+}
+
+
 
 .quemComeca{
     align-items: center;
@@ -26,8 +55,8 @@ body>div{
     justify-content: center;
 }
 
-.botao{
-    width: 40px;
+.botaoSN{
+    width: 50px;
     height: 30px;
     border-radius: 2px; 
     cursor: pointer;
@@ -68,7 +97,6 @@ body>div{
     cursor: default ;
     padding: 0;
     margin: 0;
-    border: rgb(0, 217, 255) solid 1px;
 }
 .O{
     display: flex;
@@ -79,7 +107,7 @@ body>div{
     cursor: default ;
     padding: 0;
     margin: 0;
-    border: rgb(0, 217, 255) solid 1px;
+
 }
 
 } 
