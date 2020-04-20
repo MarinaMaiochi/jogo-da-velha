@@ -136,7 +136,6 @@ function jogadaComputadorMedio(){
         const vazios = document.querySelectorAll('.vazio');
         console.info(vazios); 
         const aleatorio = Math.floor(Math.random() * vazios.length);
-        console.info(aleatorio); 
         jogaNaCasa(vazios[aleatorio] , 'O');
     }
     pcJogou++ ;
@@ -144,15 +143,15 @@ function jogadaComputadorMedio(){
     checaProximoPasso();
 }
 function jogadaComputadorDificil(){
-    veSeOGanhou();
-    if (quemComeca == 'pc'){
-        if (veSeOGanhou() == false){
+    
+    if (veSeOGanhou() == false){
+        if (quemComeca == 'pc'){
             const aleatorio = Math.floor(Math.random() * 4);
-
+    
             if(jogJogou == 0 && pcJogou == 0){
                 const conjDeCasas = [casa0 , casa2 , casa6 , casa8];
                 jogaNaCasa(conjDeCasas[aleatorio] , 'O');
-
+    
             } else if (jogJogou == 1 && pcJogou == 1){
                 if( (casa2.innerText == 'O' || casa6.innerText == 'O' )&& ( casa5.innerText == 'X' || casa8.innerText == 'X' || casa7.innerText == 'X' )){
                     jogaNaCasa(casa0 , 'O');
@@ -196,20 +195,23 @@ function jogadaComputadorDificil(){
                 jogadaComputadorMedio();
                 return
             }
-
+        } else {
             if(jogJogou == 1 && pcJogou == 0){
-                const conjDeCasas = [casa0 , casa2 , casa6 , casa8];
-                jogaNaCasa(conjDeCasas[aleatorio] , 'O');
-
+                if(casa4.innerText == ''){
+                    jogaNaCasa(casa4 , 'O'); 
+                } else {
+                    const conjDeCasas = [casa0 , casa2 , casa6 , casa8];
+                    const aleatorio = Math.floor(Math.random() * conjDeCasas.length);
+                    jogaNaCasa(conjDeCasas[aleatorio] , 'O'); 
+                }
+        
+            } else {
+                console.info('entrou aqui 2 2'); 
+                jogadaComputadorMedio()
+                return
             }
-
-
-        }
-    } else {
-        if (veSeOGanhou() == false){
-
-        }
-    }    
+        }    
+    }
 
     pcJogou++ ;
     console.info( 'jogada pc dificil' + pcJogou);
@@ -244,7 +246,7 @@ function veSeOGanhou (){
         jogaNoTrio(casa0,casa4,casa8);
     } else if (somaTrio(casa2,casa4,casa6) == 2 ){
         jogaNoTrio(casa2,casa4,casa6);
-    } else {return false }
+    } else {return false; }
     return true;
 }
 function jogaNoTrio (casa1,casa2,casa3){
