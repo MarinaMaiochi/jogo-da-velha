@@ -315,6 +315,13 @@ function reset(){
         casas[i].classList.remove('X');
         casas[i].classList.remove('O');
     }
+    estadoJogo = 'INICIO';
+    resultado = '';
+    jogJogou = 0 ;
+    pcJogou = 0 ;
+    dificuldade = 'FACIL' ;
+    quemComeca = '';
+    
     document.querySelector('.textoResultado').classList.add('some');
     document.querySelector('.butSim').classList.remove('butEscuro');
     document.querySelector('.butNao').classList.remove('butEscuro');
