@@ -3,6 +3,7 @@ let resultado = '';
 let jogJogou = 0 ;
 let pcJogou = 0 ;
 let dificuldade = 'FACIL' ;
+let quemComeca = '';
 
 celulas = document.querySelectorAll('.celula');
 for (let i = 0; i < celulas.length; i++) {               
@@ -63,6 +64,7 @@ resetBut.addEventListener('click', reset);
 
 function jogadorInicia() {
     estadoJogo = 'JOGADOR'
+    quemComeca = 'jog';
     document.querySelector('.butNao').classList.add('butEscuro');
     
     const simBut = document.querySelector('.butSim');
@@ -72,6 +74,7 @@ function jogadorInicia() {
 }
 function computadorInicia() {
     estadoJogo = 'COMPUTADOR';
+    quemComeca = 'pc';
     document.querySelector('.butSim').classList.add('butEscuro');
 
     const simBut = document.querySelector('.butSim');
@@ -108,9 +111,7 @@ function jogadaComputador(){
 function jogadaComputadorFacil(){
     const vazios = document.querySelectorAll('.vazio');
     const aleatorio = Math.floor(Math.random() * vazios.length);
-    vazios[aleatorio].innerText = 'O';
-    vazios[aleatorio].classList.add('O');
-    vazios[aleatorio].classList.remove('vazio');
+    jogaNaCasa(vazios[aleatorio] , 'O');
     checaProximoPasso();
 }
 
@@ -133,59 +134,85 @@ function jogadaComputadorMedio(){
         jogaNoTrio(casa2,casa4,casa6);
     } else {
         const vazios = document.querySelectorAll('.vazio');
+        console.info(vazios); 
         const aleatorio = Math.floor(Math.random() * vazios.length);
-        vazios[aleatorio].innerText = 'O';
-        vazios[aleatorio].classList.add('O');
-        vazios[aleatorio].classList.remove('vazio');
+        console.info(aleatorio); 
+        jogaNaCasa(vazios[aleatorio] , 'O');
     }
-    console.info( 'oooooooooo');
+    pcJogou++ ;
+    console.info( 'jogada pc medio' + pcJogou);
     checaProximoPasso();
 }
-
 function jogadaComputadorDificil(){
-    const aleatorio = Math.floor(Math.random() * 4);
+    veSeOGanhou();
+    if (quemComeca == 'pc'){
+        if (veSeOGanhou() == false){
+            const aleatorio = Math.floor(Math.random() * 4);
 
-    if(jogJogou == 0 && pcJogou == 0){
-        const conjDeCasas = [casa0 , casa2 , casa6 , casa8];
-        conjDeCasas[aleatorio].innerText = 'O' ;
-        conjDeCasas[aleatorio].classList.add('O');
+            if(jogJogou == 0 && pcJogou == 0){
+                const conjDeCasas = [casa0 , casa2 , casa6 , casa8];
+                jogaNaCasa(conjDeCasas[aleatorio] , 'O');
 
-    } else if (jogJogou == 1 && pcJogou == 1){
-        if( (casa2.innerText == 'O' || casa6.innerText == 'O' )&& ( casa5.innerText == 'X' || casa8.innerText == 'X' || casa7.innerText == 'X' )){
-            casa0.innerText = 'O';
-            casa0.classList.add('O');
-            casa0.classList.remove('vazio');
-        } else if( (casa2.innerText == 'O'|| casa6.innerText == 'O' ) && ( casa1.innerText == 'X' || casa0.innerText == 'X' || casa3.innerText == 'X' )){
-            casa8.innerText = 'O';
-            casa8.classList.add('O').remove('vazio');
-        }else if( (casa0.innerText == 'O'|| casa8.innerText == 'O' ) && ( casa1.innerText == 'X' || casa2.innerText == 'X' || casa5.innerText == 'X' )){
-            casa6.innerText = 'O';
-            casa6.classList.add('O').remove('vazio');
-        }else if( (casa0.innerText == 'O'|| casa8.innerText == 'O' ) && ( casa3.innerText == 'X' || casa6.innerText == 'X' || casa7.innerText == 'X' )){
-            casa2.innerText = 'O';
-            casa2.classList.add('O').remove('vazio');
-        }else { 
-             const aleatorio = Math.floor(Math.random() * 2);
-        
-            if (casa0.innerText == 'O' && casa8.innerText == 'X' ){
-                conjDeCasas = [casa2 , casa6];
-                conjDeCasas[aleatorio].innerText = 'O' ;
-            } else if (casa8.innerText == 'O' && casa0.innerText == 'X' ){
-                conjDeCasas = [casa2 , casa6];
-                conjDeCasas[aleatorio].innerText = 'O' ;
-            } else if (casa2.innerText == 'O' && casa6.innerText == 'X' ){
-                conjDeCasas = [casa0 , casa8];
-                conjDeCasas[aleatorio].innerText = 'O' ;
+            } else if (jogJogou == 1 && pcJogou == 1){
+                if( (casa2.innerText == 'O' || casa6.innerText == 'O' )&& ( casa5.innerText == 'X' || casa8.innerText == 'X' || casa7.innerText == 'X' )){
+                    jogaNaCasa(casa0 , 'O');
+                } else if( (casa2.innerText == 'O'|| casa6.innerText == 'O' ) && ( casa1.innerText == 'X' || casa0.innerText == 'X' || casa3.innerText == 'X' )){
+                    jogaNaCasa(casa8 , 'O');
+                }else if( (casa0.innerText == 'O'|| casa8.innerText == 'O' ) && ( casa1.innerText == 'X' || casa2.innerText == 'X' || casa5.innerText == 'X' )){
+                    jogaNaCasa(casa6 , 'O');
+                }else if( (casa0.innerText == 'O'|| casa8.innerText == 'O' ) && ( casa3.innerText == 'X' || casa6.innerText == 'X' || casa7.innerText == 'X' )){
+                    jogaNaCasa(casa2 , 'O');
+                }else { 
+                    let conjDeCasas;
+                    const aleatorio = Math.floor(Math.random() * 2);
+                
+                    if (casa0.innerText == 'O' && casa8.innerText == 'X' ){
+                        conjDeCasas = [casa2 , casa6];                  
+                    } else if (casa8.innerText == 'O' && casa0.innerText == 'X' ){
+                        conjDeCasas = [casa2 , casa6];                  
+                    } else if (casa2.innerText == 'O' && casa6.innerText == 'X' ){
+                        conjDeCasas = [casa0 , casa8];             
+                    } else if (casa6.innerText == 'O' && casa2.innerText == 'X' ){
+                        conjDeCasas = [casa0 , casa8];              
+                    } else {
+                        if( casa2.innerText == 'O'|| casa6.innerText == 'O'){
+                            conjDeCasas = [casa0 , casa8];                     
+                        }else if( casa0.innerText == 'O'|| casa8.innerText == 'O'){
+                            conjDeCasas = [casa2 , casa6];                       
+                        }
+                    }
+                    jogaNaCasa(conjDeCasas[aleatorio] , 'O');
+                }
+            } else if (jogJogou == 2 && pcJogou == 2){
+                if (casa4.innerText == ''){
+                    jogaNaCasa(casa4 , 'O');
+                } else { 
+                    console.info('entrou aqui 2 2'); 
+                    jogadaComputadorMedio()
+                    return
+                }
+            } else  { 
+                console.info('entrou no medio'); 
+                jogadaComputadorMedio();
+                return
             }
-            else if (casa6.innerText == 'O' && casa2.innerText == 'X' ){
-                conjDeCasas = [casa0 , casa8];
-                conjDeCasas[aleatorio].innerText = 'O' ;
+
+            if(jogJogou == 1 && pcJogou == 0){
+                const conjDeCasas = [casa0 , casa2 , casa6 , casa8];
+                jogaNaCasa(conjDeCasas[aleatorio] , 'O');
+
             }
-            conjDeCasas[aleatorio].classList.add('O').remove('vazio');
+
+
         }
-    }
+    } else {
+        if (veSeOGanhou() == false){
+
+        }
+    }    
 
     pcJogou++ ;
+    console.info( 'jogada pc dificil' + pcJogou);
     checaProximoPasso();
 }
 function somaTrio(casa1,casa2,casa3){
@@ -200,21 +227,40 @@ function daValor (casa1){
         return 1 ;
     } 
 }
+function veSeOGanhou (){
+    if (somaTrio(casa0,casa1,casa2) == 2 ){
+        jogaNoTrio(casa0,casa1,casa2);
+    } else if (somaTrio(casa3,casa4,casa5) == 2 ){
+        jogaNoTrio(casa3,casa4,casa5);
+    } else if (somaTrio(casa6,casa7,casa8) == 2 ){
+        jogaNoTrio(casa6,casa7,casa8);
+    } else if (somaTrio(casa0,casa3,casa6) == 2 ){
+        jogaNoTrio(casa0,casa3,casa6);
+    } else if (somaTrio(casa1,casa4,casa7) == 2 ){
+        jogaNoTrio(casa1,casa4,casa7);
+    } else if (somaTrio(casa2,casa5,casa8) == 2 ){
+        jogaNoTrio(casa2,casa5,casa8);
+    } else  if (somaTrio(casa0,casa4,casa8) == 2 ){
+        jogaNoTrio(casa0,casa4,casa8);
+    } else if (somaTrio(casa2,casa4,casa6) == 2 ){
+        jogaNoTrio(casa2,casa4,casa6);
+    } else {return false }
+    return true;
+}
 function jogaNoTrio (casa1,casa2,casa3){
     if(casa1.classList.contains('vazio')){
-        casa1.innerText = 'O';
-        casa1.classList.add('O'); 
-        casa1.classList.remove('vazio');
+        jogaNaCasa(casa1 , 'O');
     } else if(casa2.classList.contains('vazio')){
-        casa2.innerText = 'O';
-        casa2.classList.add('O'); 
-        casa2.classList.remove('vazio');
+        jogaNaCasa(casa2 , 'O');
     } else if(casa3.classList.contains('vazio')){
-        casa3.innerText = 'O';
-        casa3.classList.add('O'); 
-        casa3.classList.remove('vazio');
+        jogaNaCasa(casa3 , 'O');
     } 
     
+}
+function jogaNaCasa(casa, jogada) {
+    casa.innerText = jogada;
+    casa.classList.add(jogada); 
+    casa.classList.remove('vazio');
 }
 function checaProximoPasso() {
   
