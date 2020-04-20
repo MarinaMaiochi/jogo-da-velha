@@ -319,7 +319,6 @@ function reset(){
     resultado = '';
     jogJogou = 0 ;
     pcJogou = 0 ;
-    dificuldade = 'FACIL' ;
     quemComeca = '';
     
     document.querySelector('.textoResultado').classList.add('some');
