@@ -40,14 +40,17 @@ function escolheNivel(event){
     const escolha = event.target;
     if (escolha.classList.contains('butFacil')) {
         dificuldade = 'FACIL' ;
+        document.querySelector('.butFacil').classList.remove('butEscuro');
         document.querySelector('.butMedio').classList.add('butEscuro');
         document.querySelector('.butDificil').classList.add('butEscuro');
     } else if (escolha.classList.contains('butMedio')) {
         dificuldade = 'MEDIO' ;
+        document.querySelector('.butMedio').classList.remove('butEscuro');
         document.querySelector('.butFacil').classList.add('butEscuro');
         document.querySelector('.butDificil').classList.add('butEscuro');
     } else if (escolha.classList.contains('butDificil')) {
         dificuldade = 'DIFICIL' ;
+        document.querySelector('.butDificil').classList.remove('butEscuro');
         document.querySelector('.butFacil').classList.add('butEscuro');
         document.querySelector('.butMedio').classList.add('butEscuro');
     } 
@@ -324,8 +327,15 @@ function reset(){
     document.querySelector('.textoResultado').classList.add('some');
     document.querySelector('.butSim').classList.remove('butEscuro');
     document.querySelector('.butNao').classList.remove('butEscuro');
-    document.querySelector('.butFacil').classList.remove('butEscuro');
-    document.querySelector('.butMedio').classList.remove('butEscuro');
-    document.querySelector('.butDificil').classList.remove('butEscuro');
+    if (dificuldade != 'FACIL'){
+        document.querySelector('.butFacil').classList.add('butEscuro');
+    }
+    if (dificuldade != 'MEDIO'){
+        document.querySelector('.butMedio').classList.add('butEscuro');
+    }
+    if (dificuldade != 'DIFICIL'){
+        document.querySelector('.butDificil').classList.add('butEscuro');
+    }
+    
     addNivelEInicio();
 }
